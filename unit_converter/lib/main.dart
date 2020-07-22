@@ -98,7 +98,20 @@ class MyAppState extends State<MyApp> {
                 style: labelStyle,
               ),
               Spacer(),
-              
+              DropdownButton(
+                items: _measures.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _convertedMeasure = value;
+                  });
+                },
+                value: _convertedMeasure,
+              ),
               Text((_numberFrom == null) ? '' : _numberFrom.toString())
             ],
           ),
