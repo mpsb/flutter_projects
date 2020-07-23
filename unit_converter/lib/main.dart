@@ -10,6 +10,17 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  final Map<String, int> _measuresMap = {
+    'meters':0,
+    'kilometers': 1,
+    'grams': 2,
+    'kilograms': 3,
+    'feet': 4,
+    'miles': 5,
+    'pounds (lbs)': 6,
+    'ounces': 7,
+  };
+  
   double _numberFrom;
   String _startMeasure;
   String _convertedMeasure;
