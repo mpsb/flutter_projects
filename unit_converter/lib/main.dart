@@ -112,7 +112,26 @@ class MyAppState extends State<MyApp> {
                 },
                 value: _convertedMeasure,
               ),
-              Text((_numberFrom == null) ? '' : _numberFrom.toString())
+              Spacer(
+                flex: 2,
+              ),
+              RaisedButton(
+                child: Text(
+                  'Convert',
+                  style: inputStyle,
+                ),
+                onPressed: () => true,
+              ),
+              Spacer(
+                flex: 2,
+              ),
+              Text(
+                (_numberFrom == null) ? '' : _numberFrom.toString(),
+                style: labelStyle,
+              ),
+              Spacer(
+                flex: 8,
+              ),
             ],
           ),
         ),
