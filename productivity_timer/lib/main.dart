@@ -47,7 +47,7 @@ class TimerHomePage extends StatelessWidget {
                     child: ProductivityButton(
                         color: Color(0xff009688),
                         text: "Work",
-                        onPressed: emptyMethod),
+                        onPressed: () => timer.startWork()),
                   ),
                   Padding(
                     padding: EdgeInsets.all(defaultPadding),
@@ -56,7 +56,7 @@ class TimerHomePage extends StatelessWidget {
                     child: ProductivityButton(
                         color: Color(0xff607d8b),
                         text: "Short Break",
-                        onPressed: emptyMethod),
+                        onPressed: () => timer.startBreak(true)),
                   ),
                   Padding(
                     padding: EdgeInsets.all(defaultPadding),
@@ -65,7 +65,7 @@ class TimerHomePage extends StatelessWidget {
                     child: ProductivityButton(
                         color: Color(0xff455a64),
                         text: "Long Break",
-                        onPressed: emptyMethod),
+                        onPressed: () => timer.startBreak(false)),
                   ),
                 ],
               ),
@@ -96,7 +96,7 @@ class TimerHomePage extends StatelessWidget {
                     child: ProductivityButton(
                         color: Color(0xf212121),
                         text: "Stop",
-                        onPressed: emptyMethod),
+                        onPressed: () => timer.stopTimer()),
                   ),
                   Padding(
                     padding: EdgeInsets.all(defaultPadding),
@@ -105,7 +105,7 @@ class TimerHomePage extends StatelessWidget {
                     child: ProductivityButton(
                         color: Color(0xff009688),
                         text: "Restart",
-                        onPressed: emptyMethod),
+                        onPressed: () => timer.startTimer()),
                   ),
                 ],
               ),

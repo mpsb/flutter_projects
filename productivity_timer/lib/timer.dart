@@ -8,10 +8,28 @@ class CountDownTimer {
   Duration _time;
   Duration _fullTime;
   int work = 30;
+  int shortBreak = 5;
+  int longBreak = 20;
 
   void startWork() {
     _radius = 1;
     _time = Duration(minutes: this.work, seconds: 0);
+    _fullTime = _time;
+  }
+
+  void stopTimer() {
+    this._isActive = false;
+  }
+
+  void startTimer() {
+    if (_time.inSeconds > 0) {
+      this._isActive = true;
+    }
+  }
+
+  void startBreak(bool isShort) {
+    _radius = 1;
+    _time = Duration(minutes: (isShort) ? shortBreak : longBreak, seconds: 0);
     _fullTime = _time;
   }
 
@@ -31,10 +49,13 @@ class CountDownTimer {
     });
   }
 
-  String returnTime (Duration t) {
-    String minutes = (t.inMinutes < 10) ? '0' + t.inMinutes.toString() : t.inMinutes.toString();
+  String returnTime(Duration t) {
+    String minutes = (t.inMinutes < 10)
+        ? '0' + t.inMinutes.toString()
+        : t.inMinutes.toString();
     int numSeconds = t.inSeconds - (t.inMinutes * 60);
-    String seconds = (numSeconds < 10) ? '0' + numSeconds.toString() : numSeconds.toString();
+    String seconds =
+        (numSeconds < 10) ? '0' + numSeconds.toString() : numSeconds.toString();
     String formattedTime = minutes + ":" + seconds;
 
     return formattedTime;
