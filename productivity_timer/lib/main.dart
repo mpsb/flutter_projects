@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:work_timer/timermodel.dart';
 import 'package:work_timer/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import './timer.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,6 +33,9 @@ class TimerHomePage extends StatelessWidget {
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final double availableWidth = constraints.maxWidth;
+            final CountDownTimer timer = CountDownTimer();
+
+            timer.startWork();
 
             return Column(children: [
               Row(
@@ -64,16 +69,24 @@ class TimerHomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              Expanded(
-                child: CircularPercentIndicator(
-                  radius: availableWidth / 2,
-                  lineWidth: 10,
-                  percent: 1,
-                  center: Text('30:00',
-                      style: Theme.of(context).textTheme.headline4),
-                  progressColor: Color(0xff009688),
-                ),
-              ),
+              StreamBuilder(
+                  initialData: "00:00",
+                  stream: timer.stream(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    TimerModel timer = (snapshot.data == "00:00")
+                        ? TimerModel("00:00", 1)
+                        : snapshot.data;
+                    return Expanded(
+                      child: CircularPercentIndicator(
+                        radius: availableWidth / 2,
+                        lineWidth: 10,
+                        percent: timer.percent,
+                        center: Text(timer.time,
+                            style: Theme.of(context).textTheme.headline4),
+                        progressColor: Color(0xff009688),
+                      ),
+                    );
+                  }),
               Row(
                 children: [
                   Padding(
