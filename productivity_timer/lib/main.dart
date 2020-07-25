@@ -27,7 +27,8 @@ class TimerHomePage extends StatelessWidget {
   final double defaultPadding = 5.0;
 
   void goToSettings(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SettingsScreen()));
   }
 
   @override
@@ -47,7 +48,7 @@ class TimerHomePage extends StatelessWidget {
                 return menuItems.toList();
               },
               onSelected: (s) {
-                if (s=='Settings') {
+                if (s == 'Settings') {
                   goToSettings(context);
                 }
               },

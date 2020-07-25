@@ -14,12 +14,14 @@ class CountDownTimer {
 
   Future readSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    work = prefs.getInt('workTime') == null ? 30: prefs.getInt('workTime');
-    shortBreak = prefs.getInt('shortBreak') == null ? 30: prefs.getInt('shortBreak');
-    longBreak = prefs.getInt('longBreak') == null ? 30: prefs.getInt('longBreak');
+    work = prefs.getInt('workTime') == null ? 30 : prefs.getInt('workTime');
+    shortBreak =
+        prefs.getInt('shortBreak') == null ? 30 : prefs.getInt('shortBreak');
+    longBreak =
+        prefs.getInt('longBreak') == null ? 30 : prefs.getInt('longBreak');
   }
 
-  void startWork() async{
+  void startWork() async {
     await readSettings();
     _radius = 1;
     _time = Duration(minutes: this.work, seconds: 0);

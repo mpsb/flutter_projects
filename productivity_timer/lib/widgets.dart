@@ -36,7 +36,8 @@ class SettingsButton extends StatelessWidget {
   final String setting;
   final CallBackSetting callback;
 
-  SettingsButton(this.color, this.text, this.value, this.setting, this.callback);
+  SettingsButton(
+      this.color, this.text, this.value, this.setting, this.callback);
 
   @override
   Widget build(BuildContext context) {

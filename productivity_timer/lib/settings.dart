@@ -132,7 +132,8 @@ class _SettingsState extends State<Settings> {
           ),
           Text(''),
           Text(''),
-          SettingsButton(Color(0xff455a64), "-", -1, SHORTBREAK, updateSettings),
+          SettingsButton(
+              Color(0xff455a64), "-", -1, SHORTBREAK, updateSettings),
           TextField(
             style: textStyle,
             textAlign: TextAlign.center,
