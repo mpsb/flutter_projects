@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pong_game/pong.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Pong Game'),
         ),
-        body: Container(),
+        body: SafeArea(
+            child: Pong()
+        ),
       ),
     );
   }
