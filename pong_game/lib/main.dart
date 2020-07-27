@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           title: Text('Pong Game'),
         ),
         body: SafeArea(
-            child: Pong()
+            child: Pong(),
         ),
       ),
     );
