@@ -39,6 +39,12 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     posX = 0;
     posY = 0;
@@ -49,8 +55,8 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
     animation = Tween<double>(begin: 0, end: 100).animate(controller);
     animation.addListener(() {
       setState(() {
-        (hDir == Direction.right) ? posX+= increment : posX -= increment;
-        (vDir == Direction.down) ? posY+= increment : posY -= increment;
+        (hDir == Direction.right) ? posX += increment : posX -= increment;
+        (vDir == Direction.down) ? posY += increment : posY -= increment;
       });
       checkBorders();
     });
@@ -75,12 +81,22 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
               left: posX,
             ),
             Positioned(
-              child: Bat(batWidth, batHeight),
+              child: GestureDetector(
+                  onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                      moveBat(update),
+                  child: Bat(batWidth, batHeight)),
               bottom: 0,
+              left: batPosition,
             ),
           ],
         );
       },
     );
+  }
+
+  void moveBat(DragUpdateDetails update) {
+    setState(() {
+      batPosition += update.delta.dx;
+    });
   }
 }
