@@ -15,6 +15,7 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
   Direction hDir = Direction.right;
   Animation<double> animation;
   AnimationController controller;
+  int score = 0;
   double diam = 50;
   double increment = 5;
   double width;
@@ -47,9 +48,12 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
           posX <= (batPosition + batWidth + diam)) {
         vDir = Direction.up;
         randY = randomNumber();
+        safeSetState(() {
+          score++;
+        });
       } else {
         controller.stop();
-        dispose();
+        showEndMessage(context);
       }
     }
     if (posY <= 0 && vDir == Direction.up) {
@@ -100,6 +104,11 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
         return Stack(
           children: <Widget>[
             Positioned(
+              top: 0,
+              right: 24,
+              child: Text('Score: ' + score.toString()),
+            ),
+            Positioned(
               child: Ball(),
               top: posY,
               left: posX,
@@ -136,5 +145,31 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
         function();
       });
     }
+  }
+
+  void showEndMessage(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Game over.'),
+            content: Text('Would you like to play again?'),
+            actions: <Widget>[
+              FlatButton(child: Text('Yes'), onPressed: () {
+              setState(() {
+                posX = 0;
+                posY = 0;
+                score = 0;
+              });
+              Navigator.of(context).pop();
+              controller.repeat();
+          },),
+              FlatButton(child: Text('No'), onPressed: () {
+                Navigator.of(context).pop();
+                dispose();
+              },),
+            ],
+          );
+        });
   }
 }
