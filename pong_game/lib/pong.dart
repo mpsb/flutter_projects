@@ -94,6 +94,27 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> v = [
+      Positioned(
+        top: 0,
+        right: 24,
+        child: Text('Score: ' + score.toString()),
+      ),
+      Positioned(
+        child: Ball(),
+        top: posY,
+        left: posX,
+      ),
+      Positioned(
+        child: GestureDetector(
+            onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                moveBat(update),
+            child: Bat(batWidth, batHeight)),
+        bottom: 0,
+        left: batPosition,
+      ),
+    ];
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         height = constraints.maxHeight;
@@ -155,19 +176,25 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
             title: Text('Game over.'),
             content: Text('Would you like to play again?'),
             actions: <Widget>[
-              FlatButton(child: Text('Yes'), onPressed: () {
-              setState(() {
-                posX = 0;
-                posY = 0;
-                score = 0;
-              });
-              Navigator.of(context).pop();
-              controller.repeat();
-          },),
-              FlatButton(child: Text('No'), onPressed: () {
-                Navigator.of(context).pop();
-                dispose();
-              },),
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  setState(() {
+                    posX = 0;
+                    posY = 0;
+                    score = 0;
+                  });
+                  Navigator.of(context).pop();
+                  controller.repeat();
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  dispose();
+                },
+              ),
             ],
           );
         });
