@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_db/http_helper.dart';
+import 'package:movies_db/movie_detail.dart';
 
 class MovieList extends StatefulWidget {
   @override
@@ -59,6 +60,11 @@ class _MovieListState extends State<MovieList> {
                   leading: CircleAvatar(
                     backgroundImage: image,
                   ),
+                  onTap: () {
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (_) => MovieDetail(movies[position]));
+                    Navigator.push(context, route);
+                  },
                 ),
               );
             }));
