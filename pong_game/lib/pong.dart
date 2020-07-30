@@ -119,7 +119,7 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
       builder: (BuildContext context, BoxConstraints constraints) {
         height = constraints.maxHeight;
         width = constraints.maxWidth;
-        batWidth = width / 5;
+        batWidth = width / 6;
         batHeight = height / 20;
 
         return Stack(
