@@ -15,6 +15,16 @@ class _MovieListState extends State<MovieList> {
   List movies;
   String result;
   HttpHelper helper;
+  Icon visibleIcon = Icon(Icons.search);
+  Widget searchBar = Text('Movies');
+
+  Future search(text) async {
+    movies = await helper.findMovies(text);
+    setState(() {
+      moviesCount = movies.length;
+      movies = movies;
+    });
+  }
 
   Future initialize() async {
     movies = List();
@@ -38,7 +48,31 @@ class _MovieListState extends State<MovieList> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Movies'),
+          title: searchBar,
+          actions: <Widget>[
+            IconButton(
+              icon: visibleIcon,
+              onPressed: () {
+                setState(() {
+                  if (this.visibleIcon.icon == Icons.search) {
+                    this.visibleIcon = Icon(Icons.cancel);
+                    this.searchBar = TextField(
+                      textInputAction: TextInputAction.search,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      onSubmitted: (String text) {
+                        search(text);
+                      },
+                    );
+                  } else {
+                    setState(() {
+                      this.visibleIcon = Icon(Icons.search);
+                      this.searchBar = Text('Movies');
+                    });
+                  }
+                });
+              },
+            )
+          ],
         ),
         body: ListView.builder(
             itemCount: (this.moviesCount == null) ? 0 : this.moviesCount,
