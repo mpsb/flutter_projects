@@ -16,6 +16,7 @@ class _MovieListState extends State<MovieList> {
   String result;
   HttpHelper helper;
   Icon visibleIcon = Icon(Icons.search);
+  Icon upcomingIcon = Icon(Icons.subscriptions);
   Widget searchBar = Text('Movies');
 
   Future search(text) async {
@@ -50,6 +51,11 @@ class _MovieListState extends State<MovieList> {
         appBar: AppBar(
           title: searchBar,
           actions: <Widget>[
+            IconButton(icon: upcomingIcon, onPressed: () {
+              setState(() {
+                initialize();
+              });
+            }),
             IconButton(
               icon: visibleIcon,
               onPressed: () {
