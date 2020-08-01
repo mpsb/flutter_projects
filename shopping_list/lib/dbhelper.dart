@@ -6,6 +6,13 @@ import 'package:shopping_list/models/list_items.dart';
 class DbHelper {
   final int version = 1;
   Database db;
+  static final DbHelper _dbHelper = DbHelper._internal();
+
+  DbHelper._internal();
+
+  factory DbHelper() {
+    return _dbHelper;
+  }
 
   Future<Database> openDb() async {
     if (db == null) {
@@ -55,6 +62,16 @@ class DbHelper {
 
     return List.generate(maps.length, (i) {
       return ShoppingList(maps[i]['id'], maps[i]['name'], maps[i]['priority']);
+    });
+  }
+
+  Future<List<ListItem>> getItems(int idList) async {
+    final List<Map<String, dynamic>> maps =
+        await db.query('items', where: 'idList = ?', whereArgs: [idList]);
+
+    return List.generate(maps.length, (i) {
+      return ListItem(maps[i]['id'], maps[i]['idList'], maps[i]['name'],
+          maps[i]['quantity'], maps[i]['note']);
     });
   }
 }
