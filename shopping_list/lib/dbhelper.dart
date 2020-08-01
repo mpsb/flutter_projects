@@ -43,10 +43,18 @@ class DbHelper {
 
   Future<int> insertItem(ListItem item) async {
     int id = await this.db.insert(
-      'items',
-      item.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+          'items',
+          item.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
     return id;
+  }
+
+  Future<List<ShoppingList>> getLists() async {
+    final List<Map<String, dynamic>> maps = await db.query('lists');
+
+    return List.generate(maps.length, (i) {
+      return ShoppingList(maps[i]['id'], maps[i]['name'], maps[i]['priority']);
+    });
   }
 }
