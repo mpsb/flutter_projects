@@ -1,5 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:shopping_list/models/shopping_list.dart';
+import 'package:shopping_list/models/list_items.dart';
 
 class DbHelper {
   final int version = 1;
@@ -16,5 +18,35 @@ class DbHelper {
                 ' FOREIGN KEY(idList) REFERENCES lists(id))');
       }, version: version);
     }
+    return db;
+  }
+
+  Future testDb() async {
+    db = await openDb();
+    await db.execute('INSERT INTO lists VALUES (0, "Fruit", 2)');
+    await db.execute(
+        'INSERT INTO items VALUES (0, 0, "Apples", "2 kg", "Better if they are green")');
+    List lists = await db.rawQuery('select * from lists');
+    List items = await db.rawQuery('select * from items');
+    print(lists[0].toString());
+    print(items[0].toString());
+  }
+
+  Future<int> insertList(ShoppingList list) async {
+    int id = await this.db.insert(
+          'lists',
+          list.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+    return id;
+  }
+
+  Future<int> insertItem(ListItem item) async {
+    int id = await this.db.insert(
+      'items',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return id;
   }
 }
