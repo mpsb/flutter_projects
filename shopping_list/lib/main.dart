@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_list/dbhelper.dart';
 import 'package:shopping_list/models/shopping_list.dart';
 import 'package:shopping_list/models/list_items.dart';
+import 'package:shopping_list/ui/items_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,6 +57,12 @@ class _ShListState extends State<ShList> {
               child: Text(shoppingList[index].priority.toString()),
             ),
             trailing: IconButton(icon: Icon(Icons.edit), onPressed: null),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ItemsScreen(shoppingList[index])));
+            },
           );
         });
   }
