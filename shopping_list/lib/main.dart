@@ -3,6 +3,7 @@ import 'package:shopping_list/dbhelper.dart';
 import 'package:shopping_list/models/shopping_list.dart';
 import 'package:shopping_list/models/list_items.dart';
 import 'package:shopping_list/ui/items_screen.dart';
+import 'package:shopping_list/ui/shopping_list_dialog.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,6 +34,7 @@ class ShList extends StatefulWidget {
 class _ShListState extends State<ShList> {
   DbHelper helper = DbHelper();
   List<ShoppingList> shoppingList;
+  ShoppingListDialog dialog;
 
   Future showData() async {
     await helper.openDb();
@@ -42,6 +44,12 @@ class _ShListState extends State<ShList> {
     setState(() {
       shoppingList = shoppingList;
     });
+  }
+
+  @override
+  void initState() {
+    dialog = ShoppingListDialog();
+    super.initState();
   }
 
   @override
@@ -56,7 +64,14 @@ class _ShListState extends State<ShList> {
             leading: CircleAvatar(
               child: Text(shoppingList[index].priority.toString()),
             ),
-            trailing: IconButton(icon: Icon(Icons.edit), onPressed: null),
+            trailing: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => dialog.buildDialog(
+                          context, shoppingList[index], false));
+                }),
             onTap: () {
               Navigator.push(
                   context,
