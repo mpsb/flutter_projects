@@ -10,6 +10,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  // Map used to represent the units as integers.
   final Map<String, int> _measuresMap = {
     'meters': 0,
     'kilometers': 1,
@@ -21,6 +22,14 @@ class MyAppState extends State<MyApp> {
     'ounces': 7,
   };
 
+  // The map for different conversions of each unit. The keys '0' to '7'
+  // represent the measures to be converted. And the keys correspond to the
+  // measures as shown in _measuresMap. In each key contains a list of values,
+  // in which the index of each value corresponds to the measure to be converted
+  // to. Each value in the list is the multiplier required to convert to the
+  // desired measure. For example, in the '0' key's list, the number at index 4
+  // is 3.28084, which is the multiplier needed to convert meters (0 on the
+  // _measuresMap) to feet (4 on the _measuresMap).
   final dynamic _formulas = {
     '0': [1, 0.001, 0, 0, 3.28084, 0.000621371, 0, 0],
     '1': [1000, 1, 0, 0, 3280.84, 0.621371, 0, 0],
@@ -43,7 +52,7 @@ class MyAppState extends State<MyApp> {
     'ounces',
   ];
 
-  double _numberFrom;
+  double _numberFrom; // stores the initial value to be converted.
   String _startMeasure;
   String _convertedMeasure;
   String _resultMessage;
@@ -144,10 +153,11 @@ class MyAppState extends State<MyApp> {
                   style: inputStyle,
                 ),
                 onPressed: () {
-                  if (_startMeasure.isEmpty || _convertedMeasure.isEmpty || _numberFrom == 0) {
+                  if (_startMeasure.isEmpty ||
+                      _convertedMeasure.isEmpty ||
+                      _numberFrom == 0) {
                     return;
-                  }
-                  else {
+                  } else {
                     convert(_numberFrom, _startMeasure, _convertedMeasure);
                   }
                 },
@@ -177,9 +187,9 @@ class MyAppState extends State<MyApp> {
 
     if (result == 0) {
       _resultMessage = 'This conversion cannot be performed.';
-    }
-    else {
-      _resultMessage = '${_numberFrom.toString()} $_startMeasure is ${result.toString()} $_convertedMeasure';
+    } else {
+      _resultMessage =
+          '${_numberFrom.toString()} $_startMeasure is ${result.toString()} $_convertedMeasure';
     }
 
     setState(() {
